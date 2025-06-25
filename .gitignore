@@ -7,10 +7,35 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
+node_modules/
+dist/
 dist-ssr
 *.local
+
+.vite/
+.env.local
+.env.*.local
+.DS_Store
+
+# Python / FastAPI (Backend)
+fpcb-glove-design-backend/__pycache__/
+fpcb-glove-design-backend/*.py[cod]
+fpcb-glove-design-backend/.env
+fpcb-glove-design-backend/.DS_Store
+fpcb-glove-design-backend/.pytest_cache/
+fpcb-glove-design-backend/.mypy_cache/
+fpcb-glove-design-backend/.venv/
+fpcb-glove-design-backend/fpcb-glove-design-venv/
+fpcb-glove-design-backend/env/
+fpcb-glove-design-backend/.coverage
+fpcb-glove-design-backend/instance/
+fpcb-glove-design-backend/output/
+fpcb-glove-design-backend/node_modules/
+
+# Virtual environments (if created at project root)
+.venv/
+fpcb-glove-design-venv/
+env/
 
 # Editor directories and files
 .vscode/*
