@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import ContourEditor from './ContourEditor';
 import MaskPainter from './MaskPainter';
@@ -19,13 +19,11 @@ const ImageUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);           // Uploaded file
   
   const [contourImage, setContourImage] = useState<string | null>(null);
-  const [editedImage, setEditedImage] = useState<string | null>(null);
   const [imageID, setImageID] = useState<string | null>(null); // Store the unique image_id
   const [contourPoints, setContourPoints] = useState<[number, number][]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [maskImage, setMaskImage]  = useState<string | null>(null);
   const [tracedImage, setTracedImage]  = useState<string | null>(null);
-  const [traceId, setTraceId] = useState<string | null>(null);
 //   const [traces, setTraces] = useState<[number, number][][]>([]);
     const [traces, setTraces] = useState<TraceData>({});
     const [finalOutline, setFinalOutline] = useState<Polygon | null>(null);
@@ -41,7 +39,7 @@ const ImageUpload: React.FC = () => {
       setImageID(null);
       setContourImage(null); // Reset contour image to be hidden
       setMaskImage(null) // Reset mask image to be hidden
-      setTraceId(null);
+    //   setTraceId(null);
       setTracedImage(null);
       setTraces({});
     },
@@ -223,7 +221,7 @@ const ImageUpload: React.FC = () => {
                 onExport={async (traceData) => {
                     // setTraceId(traceData.trace_id);
                     // setTracedImage(`http://localhost:8000/${traceData.overlay_path}`);
-                    setTraceId(traceData.trace_id);
+                    // setTraceId(traceData.trace_id);
                     setTracedImage(`http://localhost:8000/${traceData.overlay_path}`);
                     // Filter out any empty/null regions from the backend
                     const validPolygons: TraceData = {};

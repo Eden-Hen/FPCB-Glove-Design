@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stage, Layer, Image as KonvaImage, Line, Circle } from 'react-konva';
 import useImage from 'use-image';
 
@@ -32,7 +32,6 @@ const MaskPainter: React.FC<MaskPainterProps> = ({
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
   const [brushSize, setBrushSize] = useState(10);
   const stageRef = useRef<any>(null);
-  const [exportedImageUrl, setExportedImageUrl] = useState<string | null>(null);
 
 
   useEffect(() => {
