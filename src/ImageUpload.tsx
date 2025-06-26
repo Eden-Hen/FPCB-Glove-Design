@@ -18,9 +18,6 @@ const ImageUpload: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);       // Local preview
   const [file, setFile] = useState<File | null>(null);           // Uploaded file
   
-  type Mode = 'edit' | 'flex' | null;
-  
-  const [mode, setMode] = useState<Mode>(null);
   const [contourImage, setContourImage] = useState<string | null>(null);
   const [editedImage, setEditedImage] = useState<string | null>(null);
   const [imageID, setImageID] = useState<string | null>(null); // Store the unique image_id
@@ -167,41 +164,6 @@ const ImageUpload: React.FC = () => {
             alert('Failed to generate KiCad file.');
         }
     };
-
-//   // This useEffect would be triggered once a contour is confirmed to automatically proceed to mask painting
-//   useEffect(() => {
-//     if (contourPoints.length > 0 && contourImage && imageID) {
-//         // You would typically call a backend endpoint here to create the mask
-//         // and then pass the mask image URL to MaskPainter.
-//         // For now, using the mask creation logic from the backend's /api/save-contour
-//         // and assuming it's available or integrating it directly if needed.
-
-//         // To create a mask, we need to send the contour points back to the backend
-//         // This is the /api/save-contour endpoint
-//         const createMask = async () => {
-//             try {
-//                 const response = await fetch('http://localhost:8000/api/save-contour', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify({
-//                         contour: contourPoints,
-//                         image_id: `output/${imageID}_cropped_hand.png` // Use the correct cropped image path
-//                     }),
-//                 });
-//                 const data = await response.json();
-//                 console.log('Mask creation response:', data);
-//                 setMaskImage(`http://localhost:8000/${data.mask_path}`);
-//                 setMode('edit'); // Assuming 'edit' mode refers to mask painting
-//             } catch (err) {
-//                 console.error('Error creating mask:', err);
-//                 alert('Failed to create mask.');
-//             }
-//         };
-//         createMask();
-//     }
-//   }, [contourPoints, contourImage, imageID]);
 
   return (
     <div>
