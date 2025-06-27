@@ -2,7 +2,7 @@ fastapi
 python-multipart
 Pillow
 numpy
-opencv-python
+opencv-python-headless
 scipy
 shapely
 svgwrite
