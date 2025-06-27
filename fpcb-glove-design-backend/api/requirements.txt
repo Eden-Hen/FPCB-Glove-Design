@@ -1,0 +1,12 @@
+fastapi
+python-multipart
+Pillow
+numpy
+opencv-python
+scipy
+shapely
+svgwrite
+lxml
+svg2mod
+mediapipe
+scikit-image

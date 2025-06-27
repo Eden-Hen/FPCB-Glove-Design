@@ -34,7 +34,8 @@ app.mount("/output", StaticFiles(directory="output"), name="output")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # Note: will need to edit when hosting
+    # allow_origins=["http://localhost:5173"], # Note: will need to edit when hosting
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -1455,7 +1456,7 @@ async def upload_image(file: UploadFile = File(...)):
 
     return JSONResponse(content={"message": "Contour detection complete",
                                  "image_id": image_id,
-                                 "contour_image": f"output/{image_id}_contoured_hand.png",
+                                 "contour_image": f"/output/{image_id}_contoured_hand.png",
                                  "contour_points": upsampled_hand_contour_points})
 
 class ContourRequest(BaseModel):
@@ -1478,7 +1479,7 @@ def save_contour(image_id: str, request: ContourRequest):
     mask_path = os.path.join("output", f"{image_id}_mask.png")
     cv2.imwrite(mask_path, mask)
 
-    return JSONResponse(content={"message": "Mask creation complete", "mask_path": f"output/{image_id}_mask.png"})
+    return JSONResponse(content={"message": "Mask creation complete", "mask_path": f"/output/{image_id}_mask.png"})
 
 
 @app.post("/upload-mask/{image_id}")
@@ -1488,7 +1489,7 @@ async def upload_mask(image_id: str, file: UploadFile = File(...)):
     with open(save_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    return JSONResponse(content={"mask_path": f"output/{image_id}_uploaded_mask.png"})
+    return JSONResponse(content={"mask_path": f"/output/{image_id}_uploaded_mask.png"})
 
 @app.post("/generate-traces/{image_id}")
 async def generate_traces(image_id: str):
@@ -1612,7 +1613,7 @@ async def generate_traces(image_id: str):
 
     return JSONResponse(content={
         "trace_id": image_id,
-        "overlay_path": f"output/{overlay_filename}",
+        "overlay_path": f"/output/{overlay_filename}",
         "polygons": serializable_polygons # These are the outline polygons
     })
 
@@ -1626,7 +1627,7 @@ async def save_edited_traces(image_id: str, trace_data: TraceData):
     try:
         with open(traces_file_path, "w") as f:
             json.dump(trace_data.polygons, f)
-        return JSONResponse(content={"message": "Traces saved successfully", "traces_file": f"output/{image_id}_traces.json"})
+        return JSONResponse(content={"message": "Traces saved successfully", "traces_file": f"/output/{image_id}_traces.json"})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save traces: {e}")
 

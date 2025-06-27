@@ -72,78 +72,11 @@ const MaskPainter: React.FC<MaskPainterProps> = ({
         setCurrentStroke([]);
     }
     setIsDrawing(false);
-
-    // // Export the drawn mask
-    // if (onExport && stageRef.current) {
-    //   const dataUrl = stageRef.current.toDataURL({ pixelRatio: 1 });
-    //   onExport(dataUrl);
-    // }
   };
 
   const handleUndo = () => {
     setStrokes(prev => prev.slice(0, -1));
   };
-
-//   const handleExport = () => {
-//     if (!stageRef.current || !image) {
-//       alert('Stage or image not ready');
-//       return;
-//     }
-  
-//     const pixelRatio = image.width / width;
-//     const canvas = stageRef.current.toCanvas({ pixelRatio });
-  
-//     canvas.toBlob(
-//       async (blob: Blob | null) => {
-//         if (!blob) {
-//           alert('Failed to generate blob.');
-//           return;
-//         }
-  
-//         const formData = new FormData();
-//         formData.append('file', blob, 'hand_mask.png');
-  
-//         try {
-//           const response = await fetch('http://localhost:8000/upload-mask', {
-//             method: 'POST',
-//             body: formData,
-//           });
-  
-//           const result = await response.json();
-//           console.log('Mask upload success:', result);
-  
-//           // Trigger trace generation
-//           const traceRes = await fetch('http://localhost:8000/generate-traces', {
-//             method: 'POST',
-//             headers: {
-//               'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//               image_id: result.image_id,  // Comes from upload-mask response
-//             }),
-//           });
-  
-//           const traceData = await traceRes.json();
-//           console.log('Traces generated:', traceData);
-  
-//           alert('Traces generated!');
-          
-//           // Render exported image within MaskPainter
-//           {exportedImageUrl && (
-//             <>
-//               <h4>Generated PCB Trace:</h4>
-//               <img src={exportedImageUrl} alt="Trace result" width="300" />
-//             </>
-//           )}
-  
-//         } catch (error) {
-//           console.error('Error:', error);
-//           alert('Failed during mask upload or trace generation.');
-//         }
-//       },
-//       'image/png'
-//     );
-//   };
 
 const handleExport = () => {
     if (!stageRef.current || !image) {
@@ -170,7 +103,7 @@ const handleExport = () => {
   
         try {
           // Step 1: Upload the binary mask
-          const response = await fetch(`http://localhost:8000/upload-mask/${imageID}`, {
+          const response = await fetch(`/api/upload-mask/${imageID}`, {
             method: 'POST',
             body: formData,
           });
@@ -179,7 +112,7 @@ const handleExport = () => {
           console.log('Mask upload success:', result);
   
           // Step 2: Generate traces using uploaded image ID
-          const traceRes = await fetch(`http://localhost:8000/generate-traces/${imageID}`, {
+          const traceRes = await fetch(`/api/generate-traces/${imageID}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

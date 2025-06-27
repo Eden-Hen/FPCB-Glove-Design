@@ -52,7 +52,7 @@ const ImageUpload: React.FC = () => {
     formData.append('file', file);  // Match FastAPI param name
 
     try {
-      const response = await fetch('http://localhost:8000/upload', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
@@ -60,7 +60,7 @@ const ImageUpload: React.FC = () => {
       const data = await response.json();
 
       console.log('Contour response:', data);
-      setContourImage(`http://localhost:8000/${data.contour_image}`); // Collect contour image data
+      setContourImage(`/api/${data.contour_image}`); // Collect contour image data
       setImageID(data.image_id);
       setContourPoints(data.contour_points); // Collect contour points data
       setImage(null); // Hide original once confirmed
@@ -71,7 +71,7 @@ const ImageUpload: React.FC = () => {
 
   const handleFinishContour = async () => {
     try {
-        const response = await fetch(`http://localhost:8000/api/save-contour/${imageID}`, {
+        const response = await fetch(`/api//save-contour/${imageID}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const ImageUpload: React.FC = () => {
       const data = await response.json();
 
       console.log("Mask saved:", data);
-      setMaskImage(`http://localhost:8000/${data.mask_path}`)
+      setMaskImage(`/api/${data.mask_path}`)
       setContourImage(null); // Hide contour image
       setIsEditing(false);
     } catch (error) {
@@ -101,7 +101,7 @@ const ImageUpload: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/save-edited-traces/${imageID}`, {
+      const response = await fetch(`/api/save-edited-traces/${imageID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ const ImageUpload: React.FC = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8000/generate-kicad/${imageID}`, {
+            const response = await fetch(`/api/generate-kicad/${imageID}`, {
             method: 'POST',
             });
 
